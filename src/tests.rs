@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 use crate::biguint::BigUInt;
 
 #[test]
@@ -87,4 +89,16 @@ fn stringifies_64285378537642(){
     let a = BigUInt::from(64285378537642u64);
     let result = std::convert::Into::<String>::into(a);
     assert_eq!(result, "64285378537642");
+}
+
+#[test]
+fn factorials_fast() {
+    let start_time = Instant::now();
+    let mut results = vec![];
+    for n in 1..153 {
+        results.push(BigUInt::factorial(n));
+    }
+    let elapsed = Instant::now() - start_time;
+    println!("Performance test took {:#?}", elapsed);
+    assert!(elapsed.as_secs() < 2);
 }
